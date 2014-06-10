@@ -1,0 +1,28 @@
+{
+  "name": "backupo",
+  "version": "0.0.1",
+  "description": "A backup framework.",
+  "main": "backupo.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/onlinemad/backupo.git"
+  },
+  "keywords": [
+    "backup"
+  ],
+  "author": "Ian Wu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/onlinemad/backupo/issues"
+  },
+  "homepage": "https://github.com/onlinemad/backupo",
+  "devDependencies": {
+    "mocha": "^1.20.1"
+  }
+}
