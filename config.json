@@ -1,0 +1,10 @@
+{
+  "storage": {
+    "google": {
+      "email": "your-gcs-email-address@developer.gserviceaccount.com",
+      "keyFile": "your-key-file.pem",
+      "bucket": "your-bucket",
+      "scopes": ["https://www.googleapis.com/auth/devstorage.full_control"]
+    }
+  }
+} 
