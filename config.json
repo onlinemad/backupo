@@ -12,5 +12,10 @@
       "password": "password",
       "confirm": true
     }
+  },
+  "plan": {
+    "targz": {
+      "folder": "/some/folder"
+    }
   }
 } 

@@ -29,6 +29,7 @@
   "dependencies": {
     "google-oauth-jwt": "^0.1.4",
     "request": "^2.36.0",
-    "ftp": "^0.3.7"
+    "ftp": "^0.3.7",
+    "tar.gz": "^0.1.1"
   }
 }
