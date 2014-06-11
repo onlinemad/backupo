@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "google-oauth-jwt": "^0.1.4",
-    "request": "^2.36.0"
+    "request": "^2.36.0",
+    "ftp": "^0.3.7"
   }
 }

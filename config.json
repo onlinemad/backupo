@@ -5,6 +5,12 @@
       "keyFile": "your-key-file.pem",
       "bucket": "your-bucket",
       "scopes": ["https://www.googleapis.com/auth/devstorage.full_control"]
+    },
+    "ftp": {
+      "host": "host",
+      "user": "user",
+      "password": "password",
+      "confirm": true
     }
   }
 } 
