@@ -5,7 +5,8 @@
 var config = require('../config.json'),
   TokenCache = require('google-oauth-jwt').TokenCache,
   fs = require('fs'),
-  request = require('request');
+  request = require('request'),
+  mime = require('mime');
 
 module.exports.save = function(file, cb) {
   var tokens = new TokenCache();
@@ -15,12 +16,12 @@ module.exports.save = function(file, cb) {
       console.log(err);
       return cb(err);
     } else {
-      var url = 'https://www.googleapis.com/upload/storage/v1beta2/b/' + config.bucket + '/o?uploadType=media&name=' + encodeURIComponent(file.replace(/^.*[\\\/]/, ''));
+      var url = 'https://www.googleapis.com/upload/storage/v1/b/' + config.bucket + '/o?uploadType=media&name=' + encodeURIComponent(file.replace(/^.*[\\\/]/, ''));
       fs.createReadStream(file).pipe(request.post({
         url: url,
         headers: {
-          Authorization: 'Bearer ' + token,
-          'x-goog-api-version': 2
+          'Content-Type': mime.lookup(file),
+          Authorization: 'Bearer ' + token
         }
       }, function(err, res, body) {
         if (err) {
