@@ -1,20 +1,15 @@
 var plans = [];
 var storages = [];
 
-require("fs").readdirSync("./plan").forEach(function(file) {
-  plans.push(require("./plan/" + file));
-});
-
-require("fs").readdirSync("./storage").forEach(function(file) {
-  storages.push(require("./storage/" + file));
-});
-
-for (var i = 0; i < plans.length; i++) {
-  plans[i].backup(null, function(err, file) {
-    for (var j = 0; j < storages.length; j++) {
-      storages[j].save(file, function(err, res) {
-        console.log(res);
-      });
-    };
-  });
-};
+exports.run = function(plan_path){
+  var config = require(plan_path);
+  for(p in config.plan) {
+    require('./plan/' + p).backup(config.plan[p], function(err, file) {
+      for(s in config.storage) {
+        require('./storage/' + s).save(file, config.storage[s], function(err, res){
+          console.log(res);
+        });
+      }
+    });
+  }
+}

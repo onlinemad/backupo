@@ -1,0 +1,56 @@
+#!/usr/bin/env node
+
+var program = require('commander');
+var fse = require('fs.extra');
+var backupo = require('../');
+
+program
+  .command('init [path]')
+  .description('Initialize a new Backupo project in current directory')
+  .action(function(path, program){
+    if(!path) {
+      console.log('Sorry, path is undefined.');
+      return
+    } 
+    var projectPath = process.cwd() + '/' + path;
+
+    fse.mkdirp(projectPath, function(err){
+      if(err) return err
+
+      fse.readdir(projectPath, function(err, contents){
+
+        if(err) return err
+
+        if(contents.length !== 0){
+          console.log('Sorry,', projectPath, 'must be empty.')
+          return
+        }
+        fse.copyRecursive( __dirname + '../../example/plan.json', projectPath, function (err) {
+          if (err) {
+            console.log('copy error');
+            throw err;
+          } else {
+            console.log('Initialized project at', projectPath);
+            return;
+          }
+        });
+      });
+    });
+  });
+
+program
+  .command('run [path]')
+  .description('Initialize a new Backupo project in current directory')
+  .action(function(path, program){
+    if(!path) {
+      console.log('Sorry, path is undefined.');
+      return
+    } 
+    backupo.run(process.cwd() + '/' + path);
+  });
+
+program.parse(process.argv);
+
+if(program.args.length < 1){
+  backupo.run(process.cwd());
+}

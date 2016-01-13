@@ -1,12 +1,19 @@
+/**
+ * ostar.js
+ *
+ * OS build-in tar command. 
+ */
 var exec = require('child_process').exec,
   os = require('os'),
-  child;
+  debug = require('debug')('backupo');
 module.exports.backup = function(option, cb) {
-  //var config = require('../config.json').plan.ostar;
-  var file = os.tmpdir() + '/Users/onlinemad/tmp'.replace(/^.*[\\\/]/, '') + '.tar';
-  child = exec('tar cf ' + file + ' /Users/onlinemad/tmp', function(error, stdout, stderr) {
-    console.log('stdout: ' + stdout);
-    console.log('stderr: ' + stderr);
+  var file = os.tmpdir() + Date.now() + '.tar';
+  debug('ostar.js', file);
+  var command = 'tar cf ' + file + ' ' + option.src;
+  debug('ostar.js', command);
+  var child = exec(command, function(error, stdout, stderr) {
+    debug('ostar.js', 'stdout', stdout);
+    debug('ostar.js', 'stderr', stderr);
     if (error !== null) {
       console.log('exec error: ' + error);
     }

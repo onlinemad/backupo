@@ -1,16 +1,18 @@
 /**
- * Tar.gz folder.
+ * targz.js
+ * 
  */
 var targz = require('tar.gz'),
-  os = require('os');
+  os = require('os'),
+  debug = require('debug')('backupo');
 module.exports.backup = function(option, cb) {
-  var config = require('../config.json').plan.targz;
-  var filepath = os.tmpdir() + config.folder.replace(/^.*[\\\/]/, '') + '.tar.gz';
-  var compress = new targz().compress(config.folder, filepath, function(err) {
+  var file = os.tmpdir() + Date.now() + '.tar.gz';
+  debug('targz.js', file);
+  var compress = new targz().compress(option.src, file, function(err) {
     if (err) {
       return cb(err);
     } else {
-      return cb(null, filepath)
+      return cb(null, file)
     }
   });
 }
