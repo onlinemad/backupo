@@ -1,13 +1,13 @@
 /**
  * tar.js
- * 
+ *
  */
 var tar = require('tar'),
   fstream = require("fstream"),
   os = require('os'),
   debug = require('debug')('backupo');
 module.exports.backup = function(option, cb) {
-  var file = os.tmpdir() + Date.now() + '.tar';
+  var file = os.tmpdir() + '/' + Date.now() + '.tar';
   debug('tar.js', file);
   var pack = tar.Pack();
   var writer = fstream.Writer(file);

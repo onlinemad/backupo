@@ -7,7 +7,7 @@ var fs = require('fs'),
   os = require('os'),
   debug = require('debug')('backupo');
 module.exports.backup = function(option, cb) {
-  var file = os.tmpdir() + Date.now() + '.txt';
+  var file = os.tmpdir() + '/' + Date.now() + '.txt';
   debug('garbage.js', file);
   fs.writeFile(file, Math.random(), function(err) {
     if (err) {
