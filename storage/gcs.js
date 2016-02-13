@@ -5,6 +5,7 @@
 var fs = require('fs'),
   path = require('path'),
   gcloud = require('gcloud'),
+  debug = require('debug')('backupo'),
   mime = require('mime');
 
 module.exports.save = function(file, option, cb) {
