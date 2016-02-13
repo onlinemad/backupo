@@ -1,7 +1,14 @@
-//var assert = require('chai').assert,
+var expect = require('chai').expect;
 var plan = require('../../plan/ostar');
+var fs = require('fs');
 
 describe('Unit Test. Only test functionality of each method', function() {
+  before(function() {
+    fs.mkdirSync('ostar');
+  });
+  after(function() {
+    fs.rmdirSync('ostar');
+  });
   describe('#backup()', function() {
     it('should make a backup by ostar.js', function(done) {
       var option = {
@@ -9,7 +16,8 @@ describe('Unit Test. Only test functionality of each method', function() {
       }
       plan.backup(option, function(err, filepath) {
         if (err) throw err;
-        console.log(filepath);
+        var stat = fs.statSync(filepath);
+        expect(stat.isFile()).to.be.true;
         done();
       });
     });

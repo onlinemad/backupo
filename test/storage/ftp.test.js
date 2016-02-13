@@ -6,7 +6,13 @@ describe('Unit Test.', function() {
     it('should backup file to google cloud storage', function(done) {
       plan.backup(null, function(err, file) {
         if (err) throw err;
-        storage.save(file, function(err, response) {
+        var option = {
+          host: 'host',
+          user: 'user',
+          password: 'password',
+          confirm: true
+        }
+        storage.save(file, option, function(err, response) {
           if (err) throw err;
           console.log(response);
           done();
