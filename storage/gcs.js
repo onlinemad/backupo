@@ -6,6 +6,8 @@ var fs = require('fs'),
   path = require('path'),
   gcloud = require('gcloud'),
   debug = require('debug')('backupo'),
+  progress = require('progress-stream'),
+  ProgressBar = require('progress'),
   mime = require('mime');
 
 module.exports.save = function(file, option, cb) {
@@ -30,8 +32,18 @@ module.exports.save = function(file, option, cb) {
     return cb(err);
   })
   remoteWriteStream.on('finish', function() {
-    console.log('done');
+    console.log(new Date(), file, 'upload to google cloud storage done.');
     return cb(null);
+  });
+  var stat = fs.statSync(file);
+  var bar = new ProgressBar(new Date() + ' uploading [:bar] :percent :etas', {
+    complete: '=',
+    incomplete: ' ',
+    width: 20,
+    total: stat.size
+  });
+  localReadStream.on('data', function (chunk) {
+    bar.tick(chunk.length);
   });
   localReadStream.pipe(remoteWriteStream);
 }
