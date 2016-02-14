@@ -11,7 +11,7 @@ program
     if(!path) {
       console.log('Sorry, path is undefined.');
       return
-    } 
+    }
     var projectPath = process.cwd() + '/' + path;
 
     fse.mkdirp(projectPath, function(err){
@@ -40,12 +40,12 @@ program
 
 program
   .command('run [path]')
-  .description('Initialize a new Backupo project in current directory')
+  .description('Run backupo process.')
   .action(function(path, program){
     if(!path) {
       console.log('Sorry, path is undefined.');
       return
-    } 
+    }
     backupo.run(process.cwd() + '/' + path);
   });
 
