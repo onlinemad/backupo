@@ -6,7 +6,6 @@ var fs = require('fs'),
   path = require('path'),
   gcloud = require('gcloud'),
   debug = require('debug')('backupo'),
-  progress = require('progress-stream'),
   ProgressBar = require('progress'),
   mime = require('mime');
 
