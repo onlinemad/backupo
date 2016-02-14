@@ -8,7 +8,7 @@ var exec = require('child_process').exec,
   debug = require('debug')('backupo');
 module.exports.backup = function(option, cb) {
   var tar_option = 'cf';
-  var file = os.tmpdir() + '/' + Date.now() + '.tar';
+  var file = os.tmpdir() + '/ostar.' + Date.now() + '.tar';
   debug('ostar.js', file);
   if(option.option) {
     tar_option = option.option;
