@@ -5,6 +5,7 @@ describe('Unit Test. Only test functionality of each method', function() {
   describe('#backup()', function() {
     it('should make a backup by postgres.js', function(done) {
       var option = {
+        host: 'localhost',
         user: 'user',
         db: 'user'
       };
