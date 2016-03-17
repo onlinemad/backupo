@@ -1,6 +1,6 @@
 {
   "name": "backupo",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A backup framework.",
   "main": "backupo.js",
   "directories": {
