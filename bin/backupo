@@ -49,6 +49,16 @@ program
     backupo.run(process.cwd() + '/' + path);
   });
 
+program
+  .command('backup [file]')
+  .option('-c, --config [config]')
+  .option('-s, --storage [storage]')
+  .description('Backup single file.')
+  .action(function(file, program){
+    backupo.backup(process.cwd() + '/' + program.config, file, program.storage);
+    return;
+  });
+
 program.parse(process.argv);
 
 if(program.args.length < 1){

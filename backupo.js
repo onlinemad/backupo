@@ -13,3 +13,10 @@ exports.run = function(plan_path){
     });
   }
 }
+
+exports.backup = function(config, file, storage){
+  var config = require(config);
+  require('./storage/' + storage).save(file, config.storage[storage], function(err, res){
+    console.log(res);
+  });
+}
