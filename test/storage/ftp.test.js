@@ -1,6 +1,6 @@
 //var assert = require('chai').assert,
 var storage = require('../../storage/ftp');
-plan = require('../../plan/garbage')
+var plan = require('../../plan/garbage');
 describe('Unit Test.', function() {
   describe('#save()', function() {
     it('should backup file to google cloud storage', function(done) {
