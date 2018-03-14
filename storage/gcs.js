@@ -2,47 +2,40 @@
  * Google Cloud Storage Adapter
  *
  */
-var fs = require('fs'),
-  path = require('path'),
-  gcloud = require('gcloud'),
-  debug = require('debug')('backupo'),
-  ProgressBar = require('progress'),
-  mime = require('mime');
+const fs = require('fs')
+const path = require('path')
+const Storage = require('@google-cloud/storage')
+const debug = require('debug')('backupo')
+const Bar = require('progress')
+const mime = require('mime')
 
-module.exports.save = function(file, option, cb) {
-  debug('gcs.js');
-  var gcs = gcloud.storage({
-    projectId: option.projectId,
+module.exports.save = (file, option, cb) => {
+  console.log(`${new Date()} Upload ${file} to google cloud storage start.`)
+  let storage = new Storage({
     keyFilename: option.keyFilename
-  });
-  var bucket = gcs.bucket(option.bucket);
-
-  var metadata = {};
-  metadata.contentType = mime.lookup(file);
-
-  var localReadStream = fs.createReadStream(file);
-
-  var gcs_file = bucket.file(path.basename(file));
-  var remoteWriteStream = gcs_file.createWriteStream({
-    metadata: metadata
-  });
-  remoteWriteStream.on('error', function(err) {
-    console.log(err);
-    return cb(err);
   })
-  remoteWriteStream.on('finish', function() {
-    console.log(new Date(), file, 'upload to google cloud storage done.');
-    return cb(null);
-  });
-  var stat = fs.statSync(file);
-  var bar = new ProgressBar(new Date() + ' uploading [:bar] :percent :etas', {
+
+  let gcs_file = storage.bucket(option.bucket).file(path.basename(file))
+
+  let bar = new Bar(new Date() + ' uploading [:bar] :percent :etas', {
     complete: '=',
     incomplete: ' ',
     width: 20,
-    total: stat.size
-  });
-  localReadStream.on('data', function (chunk) {
-    bar.tick(chunk.length);
-  });
-  localReadStream.pipe(remoteWriteStream);
+    total: fs.statSync(file).size
+  })
+
+  fs.createReadStream(file).on('data', chunk => {
+    bar.tick(chunk.length)
+  }).pipe(gcs_file.createWriteStream({
+    metadata: {
+      contentType: mime.getType(file)
+    }
+  })).on('error', err => {
+    console.error(err)
+    return cb(err)
+  }).on('finish', () => {
+    console.log(`${new Date()} Upload ${file} to google cloud storage done.`)
+    debug(gcs_file.metadata)
+    return cb(null, gcs_file.metadata)
+  })
 }

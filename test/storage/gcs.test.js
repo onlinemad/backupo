@@ -1,22 +1,19 @@
-//var assert = require('chai').assert,
-var storage = require('../../storage/gcs');
-var plan = require('../../plan/garbage');
-describe('Unit Test.', function() {
-  describe('#save()', function() {
-    it('should backup file to google cloud storage', function(done) {
-      plan.backup(null, function(err, file) {
-        if (err) throw err;
-        var option = {
-          projectId: 'projectId',
+const storage = require('../../storage/gcs')
+const plan = require('../../plan/garbage')
+describe.only('Unit Test for gcs.js.', () => {
+  describe('#save()', () => {
+    it('should backup file to google cloud storage', done => {
+      plan.backup(null, (err, file) => {
+        if (err) throw err
+        let option = {
           keyFilename: 'keyFilename',
           bucket: 'bucket'
         }
-        storage.save(file, option, function(err, response) {
-          if (err) throw err;
-          console.log(response);
-          done();
-        });
-      });
+        storage.save(file, option, (err, response) => {
+          if (err) throw err
+          done()
+        })
+      })
     })
-  });
-});
+  })
+})
